@@ -5,25 +5,20 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.CornerRadius
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.constraintlayout.compose.ConstraintLayout
-import androidx.constraintlayout.compose.ConstraintSet
 import androidx.constraintlayout.compose.layoutId
 import com.example.abc.ui.theme.AbcTheme
 
@@ -49,38 +44,37 @@ class MainActivity : ComponentActivity() {
 fun DecoupledConstraintLayout() {
 
 
-    ConstraintLayout(
-        decoupledConstraints(16.dp),
+    Row(
         Modifier
             .fillMaxSize()
-            .verticalScroll(
-                rememberScrollState()
-            )
             .horizontalScroll(rememberScrollState())
+            .verticalScroll(rememberScrollState()),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.Center
     ) {
-        planeBody()
         planeLeft()
+        planeBody()
         planeRight()
-
-
     }
+
 }
 
 @Composable
 fun planeBody() {
-    Canvas(
-        modifier = Modifier
-            .width(200.dp)
-            .height(1000.dp)
-            .padding(0.dp, 0.dp, 0.dp, 20.dp)
-            .layoutId("plane_body")
-    ) {
-        drawRoundRect(
-            color = Color.Black,
-            cornerRadius = CornerRadius(10f, 10f),
-            style = Stroke(width = 15f, cap = StrokeCap.Square)
-        )
-    }
+
+        Canvas(
+            modifier = Modifier
+                .width(200.dp)
+                .height(1000.dp)
+                .padding(0.dp, 20.dp, 0.dp, 20.dp)
+                .layoutId("plane_body")
+        ) {
+            drawRoundRect(
+                color = Color.Black,
+                cornerRadius = CornerRadius(10f, 10f),
+                style = Stroke(width = 20f, cap = StrokeCap.Square)
+            )
+        }
 }
 
 @Composable
@@ -89,10 +83,11 @@ fun planeLeft() {
         modifier = Modifier
             .width(300.dp)
             .height(100.dp)
+            .padding(20.dp, 0.dp, 0.dp, 0.dp)
             .layoutId("plane_left")
     ) {
         drawRoundRect(
-            color = Color.Magenta,
+            color = Color.Black,
             cornerRadius = CornerRadius(10f, 10f),
             style = Stroke(width = 15f, cap = StrokeCap.Square)
         )
@@ -105,41 +100,14 @@ fun planeRight() {
         modifier = Modifier
             .width(300.dp)
             .height(100.dp)
+            .padding(0.dp, 0.dp, 20.dp, 0.dp)
             .layoutId("plane_right")
     ) {
         drawRoundRect(
-            color = Color.Magenta,
+            color = Color.Black,
             cornerRadius = CornerRadius(10f, 10f),
             style = Stroke(width = 15f, cap = StrokeCap.Square)
         )
-    }
-}
-
-
-private fun decoupledConstraints(margin: Dp): ConstraintSet {
-    return ConstraintSet {
-        val planeBody = createRefFor("plane_body")
-        val planeWingLeft = createRefFor("plane_left")
-        val planeWingRight = createRefFor("plane_right")
-        val startGuideline = createGuidelineFromStart(0.5f)
-
-
-        constrain(planeBody) {
-            start.linkTo(parent.absoluteLeft)
-            end.linkTo(parent.absoluteRight)
-            top.linkTo(parent.top, 20.dp)
-        }
-        constrain(planeWingLeft) {
-            end.linkTo(planeBody.absoluteLeft)
-            top.linkTo(planeBody.top)
-            bottom.linkTo(planeBody.bottom)
-        }
-        constrain(planeWingRight) {
-            start.linkTo(planeBody.absoluteRight)
-            top.linkTo(planeBody.top)
-            bottom.linkTo(planeBody.bottom)
-        }
-
     }
 }
 
