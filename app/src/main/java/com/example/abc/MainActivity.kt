@@ -48,22 +48,25 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun DecoupledConstraintLayout() {
 
-
-    ConstraintLayout(
-        decoupledConstraints(16.dp),
-        Modifier
-            .fillMaxSize()
-            .verticalScroll(
-                rememberScrollState()
-            )
-            .horizontalScroll(rememberScrollState())
-    ) {
-        planeBody()
-        planeLeft()
-        planeRight()
+    //MainScreen()
+    PaddingDetector(7.dp)
 
 
-    }
+//    ConstraintLayout(
+//        decoupledConstraints(16.dp),
+//        Modifier
+//            .fillMaxSize()
+//            .verticalScroll(
+//                rememberScrollState()
+//            )
+//            .horizontalScroll(rememberScrollState())
+//    ) {
+//        planeBody()
+//        planeLeft()
+//        planeRight()
+//
+//
+//    }
 }
 
 @Composable
